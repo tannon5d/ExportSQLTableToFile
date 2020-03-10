@@ -12,6 +12,7 @@ def get_args():
     arg_parser.add_argument('--delimiter', help='delimiter for the output file', default=',', required=None)
     arg_parser.add_argument('--qualifier', help='qualifier for the output file', default='"', required=None)
     arg_parser.add_argument('--file_extension', help='extention for the output file', default='csv', required=None)
+    arg_parser.add_argument('--newline', help='line delimiter', default='\r\n', required=None)
 
     return arg_parser.parse_args()
 
@@ -39,7 +40,7 @@ if __name__ == "__main__":
 
         # print([column[0] for column in cursor.description])
 
-        with open(f'{args.table}.{args.file_extension}', 'w', newline='\r\n') as csvfile:
+        with open(f'{args.table}.{args.file_extension}', 'w', newline=args.newline) as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=args.delimiter, quotechar=args.qualifier)
             # write header
             csvwriter.writerow([column[0] for column in cursor.description])
